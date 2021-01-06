@@ -12,29 +12,28 @@
 
 /datum/event/heist/proc/wrappedstart()
 	var/list/candidates = SSghost_spawns.poll_candidates("Do you want to play as a Vox Raider?", ROLE_RAIDER, TRUE)
-	var/raider_num = 0
 	if(length(candidates) < RAIDERS_MIN_REQUIRED)
 		message_admins("Warning: not enough players volunteered to be raiders. Could only find [length(candidates)] out of [RAIDERS_MIN_REQUIRED] required!")
 		return
-	raider_num = min(length(candidates), RAIDERS_MAX_COUNT)
 	raid_objectives = forge_vox_objectives()
+	create_and_greet_raiders(candidates)
 
+/datum/event/heist/proc/create_and_greet_raiders(var/candidates)
+	var/raider_num
+	raider_num = min(length(candidates), RAIDERS_MAX_COUNT)
 	while(raider_num > 0)
 		var/turf/picked_loc = GLOB.raider_spawn[raider_num]
 		var/mob/C = pick_n_take(candidates)
 		var/mob/living/carbon/human/vox/M = new /mob/living/carbon/human/vox(picked_loc)
-		var/sounds = rand(2,8)
-		var/i = 0
+
 		var/newname = ""
-		while(i<=sounds)
-			i++
-			newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+		newname = random_name(MALE, "Vox")
 		M.ckey = C.ckey
 		M.real_name = capitalize(newname)
 		M.dna.real_name = M.real_name
 		M.name = M.real_name
 		M.age = rand(12,20)
-		M.set_species(/datum/species/vox)
+		//M.set_species(/datum/species/vox)
 		M.s_tone = rand(1, 6)
 		M.languages = list() // Removing language from chargen.
 		M.flavor_text = null
@@ -46,12 +45,12 @@
 		head_organ.f_style = "Shaved"
 		M.change_hair_color(97, 79, 25) //Same as the species default colour.
 		M.change_eye_color(rand(1, 255), rand(1, 255), rand(1, 255))
-		M.underwear = "Nude"
-		M.undershirt = "Nude"
-		M.socks = "Nude"
-		M.dna.ready_dna(M) // Quadriplegic Nuke Ops won't be participating in the paralympics
+		//M.underwear = "Nude"
+		//M.undershirt = "Nude"
+		//M.socks = "Nude"
+		M.dna.ready_dna(M) // Won't be participating in the paralympics
 		M.dna.species.create_organs(M)
-		M.cleanSE() //No fat/blind/colourblind/epileptic/whatever ops.
+		M.cleanSE() //No fat/blind/colourblind/epileptic/whatever.
 		M.force_update_limbs()
 		M.update_dna()
 		M.update_eyes()
@@ -66,7 +65,7 @@
 		M.regenerate_icons()
 		greet_raider(M)
 		success_spawn = 1
-
+		raider_num--
 
 /datum/event/heist/proc/greet_raider(var/mob/living/carbon/human/M)
 	to_chat(M, "<span class='boldnotice'>You are a Vox Raider, fresh from the Shoal!</span>")
