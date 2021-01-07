@@ -253,8 +253,8 @@ GLOBAL_LIST_EMPTY(cortical_stacks) //Stacks for 'leave nobody behind' objective.
 /datum/game_mode/proc/auto_declare_completion_heist()
 	if(raiders.len)
 		var/check_return = 0
-		if(GAMEMODE_IS_HEIST)
-			check_return = 1
+		//if(GAMEMODE_IS_HEIST)
+		check_return = 1
 		var/text = "<FONT size = 2><B>The Vox raiders were:</B></FONT>"
 
 		for(var/datum/mind/vox in raiders)

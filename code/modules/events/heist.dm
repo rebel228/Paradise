@@ -18,7 +18,7 @@
 	raid_objectives = forge_vox_objectives()
 	create_and_greet_raiders(candidates)
 
-/datum/event/heist/proc/create_and_greet_raiders(var/candidates)
+/datum/event/heist/proc/create_and_greet_raiders(candidates)
 	var/raider_num
 	raider_num = min(length(candidates), RAIDERS_MAX_COUNT)
 	while(raider_num > 0)
@@ -64,6 +64,8 @@
 		M.mind.offstation_role = TRUE
 		M.regenerate_icons()
 		greet_raider(M)
+		if(SSticker.mode.config_tag != "heist")
+			SSticker.mode.raiders |= M.mind
 		success_spawn = 1
 		raider_num--
 
