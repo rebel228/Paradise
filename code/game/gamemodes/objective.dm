@@ -703,7 +703,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 			if(total_amount >= target_amount)
 				return 1
 
-	var/datum/game_mode/heist/H = SSticker.mode
+	var/datum/game_mode/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
 			for(var/obj/O in raider.current.get_contents())
@@ -773,7 +773,7 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 					S = I
 					total_amount += S.get_amount()
 
-	var/datum/game_mode/heist/H = SSticker.mode
+	var/datum/game_mode/H = SSticker.mode
 	for(var/datum/mind/raider in H.raiders)
 		if(raider.current)
 			for(var/obj/item/O in raider.current.get_contents())
@@ -785,15 +785,6 @@ GLOBAL_LIST_INIT(potential_theft_objectives, (subtypesof(/datum/theft_objective)
 	if(total_amount >= target_amount) return 1
 	return 0
 
-
-/datum/objective/heist/inviolate_crew
-	explanation_text = "Do not leave any Vox behind, alive or dead."
-
-/datum/objective/heist/inviolate_crew/check_completion()
-	var/datum/game_mode/heist/H = SSticker.mode
-	if(H.is_raider_crew_safe())
-		return 1
-	return 0
 
 /datum/objective/heist/inviolate_death
 	explanation_text = "Follow the Inviolate. Minimise death and loss of resources."

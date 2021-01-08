@@ -504,11 +504,6 @@
 	for(var/obj/item/organ/external/limb in new_vox.bodyparts)
 		limb.status &= ~ORGAN_ROBOT
 
-	//Now apply cortical stack.
-	var/obj/item/implant/cortical/I = new(new_vox)
-	I.implant(new_vox)
-	GLOB.cortical_stacks += I
-
 	new_vox.equip_vox_raider()
 	new_vox.regenerate_icons()
 

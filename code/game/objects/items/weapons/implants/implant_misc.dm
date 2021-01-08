@@ -61,8 +61,3 @@
 	empulse(imp_in, 3, 5, 1)
 	if(!uses)
 		qdel(src)
-
-/obj/item/implant/cortical
-	name = "cortical stack"
-	desc = "A fist-sized mass of biocircuits and chips."
-	icon_state = "implant_evil"

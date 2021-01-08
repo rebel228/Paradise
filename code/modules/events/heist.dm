@@ -5,7 +5,6 @@
 
 /datum/event/heist
 	var/success_spawn = FALSE
-	var/list/raid_objectives = list()
 
 /datum/event/heist/start()
 	INVOKE_ASYNC(src, .proc/wrappedstart)
@@ -15,7 +14,7 @@
 	if(length(candidates) < RAIDERS_MIN_REQUIRED)
 		message_admins("Warning: not enough players volunteered to be raiders. Could only find [length(candidates)] out of [RAIDERS_MIN_REQUIRED] required!")
 		return
-	raid_objectives = forge_vox_objectives()
+	SSticker.mode.raid_objectives = forge_vox_objectives()
 	create_and_greet_raiders(candidates)
 
 /datum/event/heist/proc/create_and_greet_raiders(candidates)
@@ -54,13 +53,8 @@
 		M.force_update_limbs()
 		M.update_dna()
 		M.update_eyes()
-		//Now apply cortical stack.
-		var/obj/item/implant/cortical/I = new(M)
-		I.implant(M)
-		GLOB.cortical_stacks += I
-
 		M.equip_vox_raider()
-		M.mind.objectives += raid_objectives
+		M.mind.objectives += SSticker.mode.raid_objectives
 		M.mind.offstation_role = TRUE
 		M.regenerate_icons()
 		greet_raider(M)
@@ -100,7 +94,6 @@
 		i++
 
 	//-All- vox raids have these two objectives. Failing them loses the game.
-	objs += new /datum/objective/heist/inviolate_crew
 	objs += new /datum/objective/heist/inviolate_death
 
 	return objs
