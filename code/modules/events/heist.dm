@@ -24,15 +24,9 @@
 		var/turf/picked_loc = GLOB.raider_spawn[raider_num]
 		var/mob/C = pick_n_take(candidates)
 		var/mob/living/carbon/human/vox/M = new /mob/living/carbon/human/vox(picked_loc)
-
-		var/newname = ""
-		newname = random_name(MALE, "Vox")
 		M.ckey = C.ckey
-		M.real_name = capitalize(newname)
-		M.dna.real_name = M.real_name
-		M.name = M.real_name
+		M.set_species(/datum/species/vox)
 		M.age = rand(12,20)
-		//M.set_species(/datum/species/vox)
 		M.s_tone = rand(1, 6)
 		M.languages = list() // Removing language from chargen.
 		M.flavor_text = null
@@ -44,9 +38,6 @@
 		head_organ.f_style = "Shaved"
 		M.change_hair_color(97, 79, 25) //Same as the species default colour.
 		M.change_eye_color(rand(1, 255), rand(1, 255), rand(1, 255))
-		//M.underwear = "Nude"
-		//M.undershirt = "Nude"
-		//M.socks = "Nude"
 		M.dna.ready_dna(M) // Won't be participating in the paralympics
 		M.dna.species.create_organs(M)
 		M.cleanSE() //No fat/blind/colourblind/epileptic/whatever.
