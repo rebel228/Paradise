@@ -39,7 +39,6 @@
 		M.change_hair_color(97, 79, 25) //Same as the species default colour.
 		M.change_eye_color(rand(1, 255), rand(1, 255), rand(1, 255))
 		M.dna.ready_dna(M) // Won't be participating in the paralympics
-		M.dna.species.create_organs(M)
 		M.cleanSE() //No fat/blind/colourblind/epileptic/whatever.
 		M.force_update_limbs()
 		M.update_dna()
